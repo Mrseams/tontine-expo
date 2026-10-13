@@ -1,56 +1,73 @@
-# Welcome to your Expo app 👋
+# Tontine
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile app for managing tontines (rotating savings groups) and paying contributions with Mobile Money. It is built with **Expo** and **NativeWind**.
 
-## Get started
+> **Design credit:** the UI and motion design are by **[Emani.Ui (@EmaniUi)](https://x.com/EmaniUi)**. This project recreates two of their shots in code:
+> - [Tout son argent de tontine, en un seul parcours](https://x.com/EmaniUi/status/2108890290748792838) (home, tontines, wallet, history)
+> - [Voir qui a déjà cotisé, puis cotiser pour soi](https://x.com/EmaniUi/status/2108485196467097853) (tour details, MoMo payment)
+>
+> All credit for the visual design goes to them. Go follow their work.
 
-1. Install dependencies
+## Screenshots
 
-   ```bash
-   npm install
-   ```
+| Accueil | Vos tontines | Tontine voiture | Cotiser |
+| :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/01-home.jpg" width="200" /> | <img src="docs/screenshots/02-tontines.jpg" width="200" /> | <img src="docs/screenshots/03-tontine.jpg" width="200" /> | <img src="docs/screenshots/04-sheet.jpg" width="200" /> |
 
-2. Start the app
+| Validation MoMo | Cotisation réussie | Détails du tour | Profil |
+| :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/05-validate.jpg" width="200" /> | <img src="docs/screenshots/06-success.jpg" width="200" /> | <img src="docs/screenshots/07-tour.jpg" width="200" /> | <img src="docs/screenshots/10-profile.jpg" width="200" /> |
 
-   ```bash
-   npx expo start
-   ```
+| Mon portefeuille | Historique |
+| :---: | :---: |
+| <img src="docs/screenshots/08-wallet.jpg" width="200" /> | <img src="docs/screenshots/09-history.jpg" width="200" /> |
 
-In the output, you'll find options to open the app in a
+## Features
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Home:** credibility score, wallet balance that counts up, and a tontine carousel where the cards scale as you scroll.
+- **Tontines:** a list with "Toutes" / "Mes tontines" filters and pastel gradient cards.
+- **Tontine detail:** total collected, a mini chart of past rounds, the next beneficiary, and who has already paid.
+- **Contribution flow:** a bottom sheet (MTN MoMo or Orange Money), then a "validate on your phone" screen with a pulsing halo, a USSD fallback and a countdown, then a receipt. The check mark then springs onto your own avatar in the tour details.
+- **Wallet & history:** recent transactions, plus history filtered by Tout / Réussies / Annulées.
+- Haptics on iOS and Android. The data is mock, kept in memory (`src/lib/store.tsx`), and paying really updates the balance, the totals and the history.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Stack
 
-## Get a fresh project
+- [Expo SDK 57](https://docs.expo.dev) and [Expo Router](https://docs.expo.dev/router/introduction) (routes in `src/app`)
+- [NativeWind 4](https://www.nativewind.dev) with Tailwind CSS 3.4
+- React Native Reanimated 4, expo-linear-gradient, react-native-svg, expo-image, expo-haptics
+- Inter Tight (`@expo-google-fonts/inter-tight`) and lucide-react-native icons
 
-When you're ready, run:
+## Run it
 
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Then:
 
-### Other setup steps
+- **On your phone, no development build needed:** install [Expo Go](https://expo.dev/go) and scan the QR code. Every native module this app uses ships with Expo Go.
+- **In the browser:** press `w`, or run `npx expo start --web`.
+- **Simulators:** press `i` (iOS) or `a` (Android).
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+If your phone isn't on the same Wi-Fi as your computer, use `npx expo start --tunnel`.
 
-## Learn more
+## Project layout
 
-To learn more about developing your project with Expo, look at the following resources:
+```
+src/
+  app/            screens (Expo Router)
+    index.tsx             Accueil
+    tontines/index.tsx    Vos tontines
+    tontines/[id]/        detail, tour, validate, success
+    wallet.tsx  history.tsx  profile.tsx
+  components/     UI kit (ui.tsx), cards, bottom sheet, SVG art
+  lib/            mock data and the in-memory store
+assets/avatars/   member portraits
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Credits
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Design:** [Emani.Ui (@EmaniUi)](https://x.com/EmaniUi)
+- **Member portraits:** [Unsplash](https://unsplash.com) photographers, used under the Unsplash License
